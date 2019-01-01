@@ -1,0 +1,40 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+	http://www.springframework.org/schema/aop 
+	http://www.springframework.org/schema/aop/spring-aop-3.0.xsd 
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-3.0.xsd
+	http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+    
+   	<bean id="pbizDao" class="com.spring.dao.BizDao">
+   		<property name="email" value="nagen@synergisticit.com"/>
+   		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+   	</bean>
+   	
+   	<bean id="pservice" class="com.spring.service.ProductService">
+   		 <!-- here we are injecting  -->
+   		<property name="bizDao" ref="pbizDao"/>
+   	</bean>
+   	<!-- Create connection to deal with spring jdbc
+   	spring-jdbc
+   	 -->
+   	<bean id="pdataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/springbootdb" />
+		<property name="username" value="root" />
+		<property name="password" value="mysql@1234" />
+	</bean>
+	
+	<!-- 	JdbcTemplate jdbcTemplate=new JdbcTemplate();
+			jdbcTemplate.setDataSource(pdataSource);
+	 -->
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+   		<property name="dataSource" ref="pdataSource"/>
+   	</bean>
+   	
+   
+  </beans>  
